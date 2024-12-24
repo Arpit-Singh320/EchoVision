@@ -63,31 +63,44 @@ body {
     0% {
         background: linear-gradient(120deg, #89f7fe, #66a6ff);
     }
-    12.5% {
+    8.33% {
         background: linear-gradient(120deg, #9ddcff, #8ec6ff);
     }
-    25% {
+    16.66% {
         background: linear-gradient(120deg, #a0c4ff, #89f7fe);
     }
-    37.5% {
+    25% {
         background: linear-gradient(120deg, #b8a1ff, #fdb0c0);
     }
-    50% {
+    33.33% {
         background: linear-gradient(120deg, #ff9a9e, #fad0c4);
     }
-    62.5% {
+    41.66% {
         background: linear-gradient(120deg, #fbc2eb, #a6c1ee);
     }
-    75% {
+    50% {
         background: linear-gradient(120deg, #b5e1ff, #85a8ff);
     }
-    87.5% {
+    58.33% {
         background: linear-gradient(120deg, #8de5ff, #72c4ff);
+    }
+    66.66% {
+        background: linear-gradient(120deg, #89f7fe, #66a6ff);
+    }
+    75% {
+        background: linear-gradient(120deg, #8bc4fe, #7bb1ff);
+    }
+    83.33% {
+        background: linear-gradient(120deg, #a5b8ff, #d7f4ff);
+    }
+    91.66% {
+        background: linear-gradient(120deg, #c3e4ff, #8ec6ff);
     }
     100% {
         background: linear-gradient(120deg, #89f7fe, #66a6ff);
     }
 }
+
 
 
 
