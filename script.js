@@ -182,6 +182,11 @@ async function analyzeImage() {
                     <strong>Detected Image Caption:</strong> ${chatbotResponse}
                 `;
 
+                // Ensure the spinner is hidden only after caption is visible
+                processedCaption.addEventListener("load", () => {
+                    loadingSpinner.style.display = "none";
+                });
+
                 // Speak the chatbot response
                 speakCaption(chatbotResponse);
 
@@ -198,8 +203,6 @@ async function analyzeImage() {
         } catch (error) {
             console.error(error);
             alert("An error occurred during processing.");
-        } finally {
-            loadingSpinner.style.display = "none";
         }
     };
 
@@ -207,16 +210,25 @@ async function analyzeImage() {
 }
 
 /**
- * Text-to-Speech function to speak the detected caption.
+ * Text-to-Speech function to speak the detected caption with a soft English voice.
  * @param {string} text - Text to speak.
  */
 function speakCaption(text) {
     const synth = window.speechSynthesis;
+    const voices = synth.getVoices();
+    
+    // Find an English voice (regardless of country)
+    const englishVoice = voices.find((voice) => voice.lang.startsWith("en"));
+
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-US";
-    utterance.volume = 1; // Volume (0 to 1)
-    utterance.rate = 1; // Speech rate (0.1 to 10)
-    utterance.pitch = 1; // Pitch (0 to 2)
+    utterance.lang = "en"; // English language
+    utterance.voice = englishVoice || voices[0]; // Default to the first available voice if no English voice is found
+    
+    // Adjust voice characteristics for a soft voice
+    utterance.volume = 0.9; // Lower the volume slightly for a softer sound (0 to 1)
+    utterance.rate = 0.9; // Reduce the speech rate slightly for a softer, slower delivery (0.1 to 10)
+    utterance.pitch = 0.8; // Lower the pitch for a softer, more relaxed tone (0 to 2)
+    
     synth.speak(utterance);
 }
 
