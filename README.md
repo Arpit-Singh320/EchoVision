@@ -50,23 +50,3 @@ You can check out the live demo of the application here:
 
 This project aims to help blind and visually impaired people navigate the world by providing an accessible solution to understanding their surroundings through technology. The goal is to create an intuitive and seamless experience for users to interact with the environment via voice.
 
-## 🔧 Setup and Installation
-
-To run EchoVision on your local machine, follow these steps:
-
-### 1. Clone the repository:
-
-```bash
-git clone https://github.com/your-username/echo-vision.git
-
-## 👥 Contributing
-
-Contributions are welcome! If you have any improvements or new features you'd like to contribute, feel free to fork the repository and create a pull request.
-
-### Steps to Contribute:
-1. **Fork the repository**: Click the "Fork" button on the top right of the repository page.
-2. **Clone your fork** to your local machine:
-   ```bash
-   git clone https://github.com/arpit-singh320.github.io/echo-vision.git
-
-
