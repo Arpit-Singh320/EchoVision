@@ -48,8 +48,13 @@ function getRandomColor() {
 }
 
 imageInput.addEventListener("change", () => {
-    uploadNotification.style.display = imageInput.files.length > 0 ? "block" : "none";
+    if (imageInput.files.length > 0) {
+        uploadNotification.style.display = "block";
+    } else {
+        uploadNotification.style.display = "none";
+    }
 });
+
 
 async function getChatbotResponse(message) {
     const url = `${apiBase}/chat/completions`;
