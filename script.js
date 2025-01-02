@@ -25,6 +25,24 @@ async function queryHuggingFaceAPI(url, data) {
     return response.json();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Particle Effect
+    const particlesContainer = document.createElement("div");
+    particlesContainer.className = "particles";
+    document.body.appendChild(particlesContainer);
+
+    const numberOfParticles = 50;
+    for (let i = 0; i < numberOfParticles; i++) {
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particle.style.width = `${Math.random() * 8 + 2}px`;
+        particle.style.height = particle.style.width; // Ensure particle is a circle
+        particlesContainer.appendChild(particle);
+    }
+});
+
 function getRandomColor() {
     return `hsl(${Math.random() * 360}, 70%, 60%)`;
 }
