@@ -58,3 +58,15 @@ To run EchoVision on your local machine, follow these steps:
 
 ```bash
 git clone https://github.com/your-username/echo-vision.git
+
+## 👥 Contributing
+
+Contributions are welcome! If you have any improvements or new features you'd like to contribute, feel free to fork the repository and create a pull request.
+
+### Steps to Contribute:
+1. **Fork the repository**: Click the "Fork" button on the top right of the repository page.
+2. **Clone your fork** to your local machine:
+   ```bash
+   git clone https://github.com/arpit-singh320.github.io/echo-vision.git
+
+
