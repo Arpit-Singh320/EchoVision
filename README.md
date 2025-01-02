@@ -14,7 +14,7 @@ Key features include:
 ## 🚀 Demo
 
 You can check out the live demo of the application here:  
-**[Link to Your Project Demo]( https://arpit-singh320.github.io/InsightLens/)**  
+**[Link to Your Project Demo]( https://arpit-singh320.github.io/EchoVision)**  
 *(Replace this placeholder with the actual link to your project demo)*
 
 ## 🛠️ Technologies Used
