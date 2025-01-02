@@ -1,3 +1,4 @@
+// DOM Elements
 const analyzeButton = document.getElementById("analyzeButton");
 const imageInput = document.getElementById("imageInput");
 const uploadNotification = document.getElementById("uploadNotification");
@@ -9,10 +10,17 @@ const processedCaption = document.getElementById("processedCaption");
 const objectDetails = document.getElementById("objectDetails");
 const downloadButton = document.getElementById("downloadButton");
 
+// API Authentication and Base URLs
 const AUTH_TOKEN = "Bearer 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";
-const apiKey = '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';
-const apiBase = 'https://api.groq.com/openai/v1';
+const apiKey = "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";
+const apiBase = "https://api.groq.com/openai/v1";
 
+/**
+ * Utility function to call Hugging Face APIs.
+ * @param {string} url - API endpoint.
+ * @param {object} data - Request payload.
+ * @returns {Promise} - API response as JSON.
+ */
 async function queryHuggingFaceAPI(url, data) {
     const response = await fetch(url, {
         headers: {
@@ -25,8 +33,10 @@ async function queryHuggingFaceAPI(url, data) {
     return response.json();
 }
 
+/**
+ * Add particle effects to the page for a dynamic visual experience.
+ */
 document.addEventListener("DOMContentLoaded", () => {
-    // Particle Effect
     const particlesContainer = document.createElement("div");
     particlesContainer.className = "particles";
     document.body.appendChild(particlesContainer);
@@ -43,19 +53,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+/**
+ * Generate a random color in HSL format.
+ */
 function getRandomColor() {
     return `hsl(${Math.random() * 360}, 70%, 60%)`;
 }
 
+/**
+ * Event listener for image upload, displaying notification.
+ */
 imageInput.addEventListener("change", () => {
-    if (imageInput.files.length > 0) {
-        uploadNotification.style.display = "block";
-    } else {
-        uploadNotification.style.display = "none";
-    }
+    uploadNotification.style.display = imageInput.files.length > 0 ? "block" : "none";
 });
 
-
+/**
+ * Call the chatbot API to process a message.
+ * @param {string} message - The message to send to the chatbot.
+ * @returns {Promise<string>} - The chatbot's response.
+ */
 async function getChatbotResponse(message) {
     const url = `${apiBase}/chat/completions`;
     const headers = {
@@ -81,6 +97,9 @@ async function getChatbotResponse(message) {
     }
 }
 
+/**
+ * Main function to analyze an uploaded image and display results.
+ */
 async function analyzeImage() {
     const file = imageInput.files[0];
     if (!file) {
@@ -96,6 +115,7 @@ async function analyzeImage() {
         const imageData = e.target.result;
 
         try {
+            // Draw the uploaded image on the canvas
             const ctxUploaded = uploadedCanvas.getContext("2d");
             const uploadedImage = new Image();
             uploadedImage.onload = () => {
@@ -105,7 +125,10 @@ async function analyzeImage() {
             };
             uploadedImage.src = imageData;
 
+            // Convert image data to array buffer for API processing
             const arrayBuffer = Uint8Array.from(atob(imageData.split(",")[1]), (c) => c.charCodeAt(0));
+
+            // Call Hugging Face Object Detection API
             const objectResponse = await queryHuggingFaceAPI(
                 "https://api-inference.huggingface.co/models/facebook/detr-resnet-50",
                 arrayBuffer
@@ -118,7 +141,7 @@ async function analyzeImage() {
                 processedCanvas.height = processedImage.height;
                 ctxProcessed.drawImage(processedImage, 0, 0);
 
-                // Categorize objects and assign colors
+                // Categorize detected objects and assign colors
                 const categories = {};
                 objectResponse.forEach(({ label }) => {
                     if (!categories[label]) {
@@ -127,22 +150,22 @@ async function analyzeImage() {
                     categories[label].count++;
                 });
 
-                // Draw bounding boxes
+                // Draw bounding boxes and labels
                 objectResponse.forEach(({ label, score, box }) => {
-                    const categoryColor = categories[label].color;
-                    ctxProcessed.strokeStyle = categoryColor;
+                    const color = categories[label].color;
+                    ctxProcessed.strokeStyle = color;
                     ctxProcessed.lineWidth = 2;
                     ctxProcessed.strokeRect(box.xmin, box.ymin, box.xmax - box.xmin, box.ymax - box.ymin);
-                    ctxProcessed.fillStyle = categoryColor;
+                    ctxProcessed.fillStyle = color;
                     ctxProcessed.font = "16px Arial";
                     ctxProcessed.fillText(`${label} (${(score * 100).toFixed(1)}%)`, box.xmin, box.ymin - 5);
                 });
 
+                // Display object details and captions
                 const objectDetailsHTML = Object.entries(categories)
                     .map(([label, { count }]) => `${label}: ${count}`)
                     .join(", ");
 
-                // Get caption
                 const captionResponse = await queryHuggingFaceAPI(
                     "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large",
                     arrayBuffer
@@ -150,7 +173,7 @@ async function analyzeImage() {
 
                 const caption = captionResponse[0]?.generated_text || "No caption";
 
-                // Chatbot input and response
+                // Call chatbot for a refined caption
                 const chatbotInput = `The scene is: "${caption}" and object details are: ${objectDetailsHTML}.`;
                 const chatbotResponse = await getChatbotResponse(chatbotInput);
 
@@ -158,17 +181,20 @@ async function analyzeImage() {
                 processedCaption.innerHTML = `
                     <strong>Detected Image Caption:</strong> ${chatbotResponse}
                 `;
+
+                // Speak the chatbot response
+                speakCaption(chatbotResponse);
+
+                // Set up download button
+                downloadButton.onclick = () => {
+                    const link = document.createElement("a");
+                    link.download = "processed_image.png";
+                    link.href = processedCanvas.toDataURL();
+                    link.click();
+                };
             };
 
             processedImage.src = imageData;
-
-
-            downloadButton.onclick = () => {
-                const link = document.createElement("a");
-                link.download = "processed_image.png";
-                link.href = processedCanvas.toDataURL();
-                link.click();
-            };
         } catch (error) {
             console.error(error);
             alert("An error occurred during processing.");
@@ -180,6 +206,19 @@ async function analyzeImage() {
     reader.readAsDataURL(file);
 }
 
+/**
+ * Text-to-Speech function to speak the detected caption.
+ * @param {string} text - Text to speak.
+ */
+function speakCaption(text) {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.volume = 1; // Volume (0 to 1)
+    utterance.rate = 1; // Speech rate (0.1 to 10)
+    utterance.pitch = 1; // Pitch (0 to 2)
+    synth.speak(utterance);
+}
 
-
+// Attach event listener to the analyze button
 analyzeButton.addEventListener("click", analyzeImage);
