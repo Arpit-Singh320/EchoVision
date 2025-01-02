@@ -2,8 +2,6 @@
 
 **EchoVision** is an innovative web application designed to assist visually impaired users by analyzing images and describing them through speech and text. It leverages AI-powered image processing and natural language generation to help users understand their surroundings better.
 
-![EchoVision Logo](https://your-logo-link.com)  <!-- Replace this with your logo URL if you have one -->
-
 ## 🌟 Project Overview
 
 EchoVision empowers visually impaired users to interact with and interpret their surroundings in a more intuitive and accessible way. The application analyzes uploaded images, provides object detection details, and narrates the scene through a conversational AI chatbot.
