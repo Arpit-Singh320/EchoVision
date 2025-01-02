@@ -163,7 +163,7 @@ async function analyzeImage() {
 
                 // Display object details and captions
                 const objectDetailsHTML = Object.entries(categories)
-                    .map(([label, { count }]) => `${label}: ${count}`)
+                    .map(([label]) => `${label}`)
                     .join(", ");
 
                 const captionResponse = await queryHuggingFaceAPI(
