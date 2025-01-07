@@ -11,7 +11,7 @@ const objectDetails = document.getElementById("objectDetails");
 const downloadButton = document.getElementById("downloadButton");
 
 // API Authentication and Base URLs
-const AUTH_TOKEN = "Bearer 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;
+const AUTH_TOKEN = "Bearer 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";
 const apiKey = "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";
 const apiBase = "https://api.groq.com/openai/v1";
 
