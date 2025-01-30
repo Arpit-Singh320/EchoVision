@@ -1,6 +1,6 @@
-const CONFIG = {
-  AUTH_TOKEN: "Bearer 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",
+const config = {
+    HUGGING_FACE_TOKEN: "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",
+    GROQ_API_KEY: "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"
 };
-const CONFIG = {
-  apiKey: "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",
-};
+
+export default config;
